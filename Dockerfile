@@ -21,7 +21,8 @@ RUN \
     python3-dev && \
   echo "**** install runtime packages ****" && \
   apk add --no-cache \
-    yarn && \
+    nodejs \
+    npm && \
   echo "**** download thelounge ****" && \
   if [ -z ${THELOUNGE_VERSION+x} ]; then \
     THELOUNGE_VERSION=$(curl -sX GET "https://api.github.com/repos/thelounge/thelounge/releases/latest" | jq -r '. | .tag_name'); \
@@ -30,7 +31,7 @@ RUN \
     /app/thelounge && \
   curl -o \
     /tmp/thelounge.tar.gz -L \
-    "https://github.com/thelounge/thelounge/archive/refs/tags/${THELOUNGE_VERSION}.tar.gz" && \
+    "https://github.com/tetrahydroc/thelounge/archive/master.tar.gz" && \
   tar xf \
     /tmp/thelounge.tar.gz -C \
     /app/thelounge --strip-components=1 && \
@@ -38,14 +39,16 @@ RUN \
   echo "**** modify thelounge source ****" && \
   sed -i "s/public: false,/public: true,/g" defaults/config.js && \
   echo "**** install thelounge ****" && \
+  npm install -g corepack && \
   yarn install && \
   NODE_ENV=production yarn build && \
   yarn link && \
-  yarn --non-interactive cache clean && \
+  yarn cache clean && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   apk del --purge \
-    build-dependencies && \
+    build-dependencies \
+    npm && \
   rm -rf \
     /root \
     /tmp/* && \
