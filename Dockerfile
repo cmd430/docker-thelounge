@@ -42,7 +42,7 @@ RUN \
   npm install -g corepack && \
   yarn install && \
   NODE_ENV=production yarn build && \
-  yarn link && \
+  npm link && \
   yarn cache clean && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
