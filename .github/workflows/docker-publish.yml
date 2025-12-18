@@ -1,4 +1,4 @@
-name: Build and Publish Image
+name: Docker
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -7,16 +7,16 @@ name: Build and Publish Image
 
 on:
   workflow_dispatch:
-
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
+
 jobs:
   build:
-  
+
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,8 +28,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
