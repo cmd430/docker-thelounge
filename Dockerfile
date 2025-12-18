@@ -47,8 +47,7 @@ RUN \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   apk del --purge \
-    build-dependencies \
-    npm && \
+    build-dependencies && \
   rm -rf \
     /root \
     /tmp/* && \
