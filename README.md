@@ -45,7 +45,7 @@ Find us at:
 
 We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://distribution.github.io/distribution/spec/manifest-v2-2/#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
 
-Simply pulling `lscr.io/linuxserver/thelounge:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
+Simply pulling `ghcr.io/cmd430/docker-thelounge:master` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
 The architectures supported by this image are:
 
@@ -109,7 +109,7 @@ To help you get started creating a container from this image you can either use 
 ---
 services:
   thelounge:
-    image: lscr.io/linuxserver/thelounge:latest
+    image: ghcr.io/cmd430/docker-thelounge:master
     container_name: thelounge
     environment:
       - PUID=1000
@@ -133,7 +133,7 @@ docker run -d \
   -p 9000:9000 \
   -v /path/to/thelounge/config:/config \
   --restart unless-stopped \
-  lscr.io/linuxserver/thelounge:latest
+  ghcr.io/cmd430/docker-thelounge:master
 ```
 
 ## Parameters
@@ -213,7 +213,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 * Image version number:
 
     ```bash
-    docker inspect -f '{{ index .Config.Labels "build_version" }}' lscr.io/linuxserver/thelounge:latest
+    docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/cmd430/docker-thelounge:master
     ```
 
 ## Updating Info
@@ -261,7 +261,7 @@ Below are the instructions for updating containers:
 * Update the image:
 
     ```bash
-    docker pull lscr.io/linuxserver/thelounge:latest
+    docker pull ghcr.io/cmd430/docker-thelounge:master
     ```
 
 * Stop the running container:
@@ -298,7 +298,7 @@ cd docker-thelounge
 docker build \
   --no-cache \
   --pull \
-  -t lscr.io/linuxserver/thelounge:latest .
+  -t ghcr.io/cmd430/docker-thelounge:master .
 ```
 
 The ARM variants can be built on x86_64 hardware and vice versa using `lscr.io/linuxserver/qemu-static`
