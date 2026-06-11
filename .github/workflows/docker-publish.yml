@@ -56,6 +56,15 @@ jobs:
           echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
           echo "short_sha=${sha::12}" >> "${GITHUB_OUTPUT}"
 
+      - name: Set image tag
+        id: image-tag
+        run: |
+          if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
+            echo "tag=beta" >> "${GITHUB_OUTPUT}"
+          else
+            echo "tag=latest" >> "${GITHUB_OUTPUT}"
+          fi
+
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
@@ -67,6 +76,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check for existing upstream image
+        if: github.event_name == 'schedule'
         id: existing
         continue-on-error: true
         run: docker buildx imagetools inspect "${REGISTRY}/${IMAGE_NAME}:upstream-${{ steps.upstream.outputs.short_sha }}"
@@ -80,7 +90,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest
+            type=raw,value=${{ steps.image-tag.outputs.tag }}
             type=raw,value=upstream-${{ steps.upstream.outputs.short_sha }}
 
       # Build and push Docker image with Buildx (don't push on PR)
