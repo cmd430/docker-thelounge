@@ -62,7 +62,7 @@ jobs:
           if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
             echo "tag=beta" >> "${GITHUB_OUTPUT}"
           else
-            echo "tag=latest" >> "${GITHUB_OUTPUT}"
+            echo "tag=master" >> "${GITHUB_OUTPUT}"
           fi
 
       # Login against a Docker registry except on PR
