@@ -7,6 +7,7 @@ ARG THELOUNGE_VERSION
 
 RUN \
   apk add --no-cache \
+    openssh-client-common \
     build-base \
     git \
     curl \
