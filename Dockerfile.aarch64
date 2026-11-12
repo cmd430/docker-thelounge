@@ -28,7 +28,7 @@ RUN \
 WORKDIR /app/thelounge
 
 RUN \
-  git config --global url."https://github.com/".insteadOf "ssh://git@github.com/" \
+  git config --global url."https://github.com/".insteadOf "ssh://git@github.com/" && \
   sed -i "s/public: false,/public: true,/g" defaults/config.js && \
   npm install -g corepack && \
   yarn install && \
