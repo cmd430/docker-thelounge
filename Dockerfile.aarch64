@@ -34,7 +34,7 @@ RUN \
   yarn install && \
   NODE_ENV=production yarn build && \
   echo "**** prune devDependencies, keep only production node_modules ****" && \
-  npm prune --omit=dev && \
+  yarn workspaces focus --all --production && \
   yarn cache clean
 
 # --- final stage: runtime only, no build tools/toolchain ---
@@ -52,12 +52,13 @@ ENV THELOUNGE_HOME="/config"
 RUN \
   echo "**** install runtime packages ****" && \
   apk add --no-cache \
-    nodejs
+    nodejs \
+    npm
 
 COPY --from=build /app/thelounge /app/thelounge
 
 RUN \
-  echo "**** link thelounge binary (no npm needed at runtime) ****" && \
+  echo "**** link thelounge binary ****" && \
   chmod +x /app/thelounge/index.js && \
   ln -s /app/thelounge/index.js /usr/local/bin/thelounge && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version

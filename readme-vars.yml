@@ -98,6 +98,7 @@ init_diagram: |
   "thelounge:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "11.11.26:", desc: "Use Yarn for production dependencies and restore runtime npm."}
   - {date: "27.07.25:", desc: "Rebase to Alpine 3.22."}
   - {date: "06.06.24:", desc: "Rebase to Alpine 3.20."}
   - {date: "23.12.23:", desc: "Rebase to Alpine 3.19."}
